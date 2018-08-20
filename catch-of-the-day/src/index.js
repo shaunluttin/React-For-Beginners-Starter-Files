@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
-import StoreSelector from './components/StoreSelector';
+import App from './components/App';
 import './css/style.css';
 
 render(
-    <StoreSelector />,
+    <App />,
     document.querySelector('#main'));
