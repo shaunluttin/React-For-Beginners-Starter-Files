@@ -1,9 +1,12 @@
 import React from 'react';
+import AddFish from './AddFish';
 
 class Inventory extends React.Component {
     render() {
         return (
-            <div>Inventory!!</div>
+            <div>
+                <AddFish addFish={this.props.addFish} />
+            </div>
         );
     }
 }

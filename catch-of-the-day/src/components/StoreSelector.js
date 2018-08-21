@@ -6,6 +6,9 @@ class StoreSelector extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
+        const store = this.myInput.value.value;
+        this.props.history.push(`/store/${store}`);
+
         console.log(`Submitted ${this.myInput}`);
     }
 
