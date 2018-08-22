@@ -4,12 +4,25 @@ import Inventory from "./Inventory";
 import Order from "./Order";
 import sampleFishes from "../sample-fishes";
 import Fish from "./Fish";
+import base from "../base";
 
 class App extends React.Component {
   state = {
     fishes: {},
     order: {}
   };
+
+  componentDidMount() {
+    const storeId = this.props.match.params.storeId;
+    this.ref = base.syncState(`${storeId}/fishes`, {
+      context : this,
+      state: 'fishes'
+    });
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.ref);
+  }
 
   addFish = (fish) => {
     const fishes = { ...this.state.fishes };
@@ -32,9 +45,9 @@ class App extends React.Component {
           <Header tagline="Welcome to Fish" />
           <ul className="fish-list">
             {
-              Object.keys(this.state.fishes).map(key => 
-                <Fish 
-                  key={key} 
+              Object.keys(this.state.fishes).map(key =>
+                <Fish
+                  key={key}
                   id={key}
                   details={this.state.fishes[key]}
                   addToOrder={this.addToOrder} />)
