@@ -4,7 +4,7 @@ class AddFish extends React.Component {
   nameRef = React.createRef();
   priceRef = React.createRef();
   statusRef = React.createRef();
-  descriptionRef = React.createRef();
+  descRef = React.createRef();
   imageRef = React.createRef();
 
   createFish = event => {
@@ -14,7 +14,7 @@ class AddFish extends React.Component {
       name: this.nameRef,
       price: this.priceRef,
       status: this.statusRef,
-      description: this.descriptionRef,
+      desc: this.descRef,
       image: this.imageRef
     };
 
@@ -31,7 +31,7 @@ class AddFish extends React.Component {
           <option>Fresh</option>
           <option>Unavailable</option>
         </select>
-        <textarea ref={this.descriptionRef} />
+        <textarea ref={this.descRef} />
         <input type="text" ref={this.imageRef} />
         <button>+ Add Fish</button>
       </form>
