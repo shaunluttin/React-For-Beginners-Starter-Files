@@ -14,14 +14,29 @@ class App extends React.Component {
 
   componentDidMount() {
     const storeId = this.props.match.params.storeId;
-    this.ref = base.syncState(`${storeId}/fishes`, {
-      context : this,
-      state: 'fishes'
+    const localStateJson = window.localStorage.getItem(storeId);
+    const localStateObj = JSON.parse(localStateJson);
+
+    const restoreLocalState = () => {
+      const order = localStateObj.order;
+      this.setState({ order });
+    }
+
+    this.firebaseRef = base.syncState(`${storeId}/fishes`, {
+      context: this,
+      state: 'fishes',
+      then: restoreLocalState
     });
   }
 
   componentWillUnmount() {
-    base.removeBinding(this.ref);
+    base.removeBinding(this.firebaseRef);
+  }
+
+  componentDidUpdate() {
+    const key = this.props.match.params.storeId;
+    const value = JSON.stringify({ ...this.state });
+    window.localStorage.setItem(key, value);
   }
 
   addFish = (fish) => {
@@ -51,7 +66,7 @@ class App extends React.Component {
                   id={key}
                   details={this.state.fishes[key]}
                   addToOrder={this.addToOrder} />)
-              }
+            }
           </ul>
         </div>
         <Order order={this.state.order} fishes={this.state.fishes} />
