@@ -18,7 +18,7 @@ class App extends React.Component {
     const localStateObj = JSON.parse(localStateJson);
 
     const restoreLocalState = () => {
-      const order = localStateObj.order;
+      const order = localStateObj && localStateObj.order;
       this.setState({ order });
     }
 
@@ -46,17 +46,26 @@ class App extends React.Component {
   };
 
   updateFish = (key, fish) => {
-    console.log(key);
-    console.log(fish);
-
     const fishes = { ...this.state.fishes };
     fishes[key] = fish;
     this.setState({ fishes });
   };
 
+  removeFish = (key) => {
+    const fishes = { ...this.state.fishes };
+    fishes[key] = null; // use null for firebase
+    this.setState({ fishes });
+  }
+
   addToOrder = (key) => {
     const order = { ...this.state.order };
     order[key] = order[key] + 1 || 1;
+    this.setState({ order });
+  }
+
+  removeFromOrder = (key) => {
+    const order = { ...this.state.order };
+    delete order[key];
     this.setState({ order });
   }
 
@@ -78,11 +87,15 @@ class App extends React.Component {
             }
           </ul>
         </div>
-        <Order order={this.state.order} fishes={this.state.fishes} />
-        <Inventory 
-          fishes={this.state.fishes} 
-          addFish={this.addFish} 
-          updateFish={this.updateFish} 
+        <Order 
+          removeFromOrder={this.removeFromOrder}
+          order={this.state.order} 
+          fishes={this.state.fishes} />
+        <Inventory
+          fishes={this.state.fishes}
+          removeFish={this.removeFish}
+          addFish={this.addFish}
+          updateFish={this.updateFish}
           seedFishes={this.seedFishes} />
       </div>
     );
