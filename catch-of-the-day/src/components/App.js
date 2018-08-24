@@ -20,7 +20,7 @@ class App extends React.Component {
 
     const restoreLocalState = () => {
       const order = localStateObj && localStateObj.order;
-      this.setState({ order });
+      this.setState({ order: order });
     }
 
     this.firebaseRef = base.syncState(`${storeId}/fishes`, {
@@ -93,6 +93,7 @@ class App extends React.Component {
           order={this.state.order} 
           fishes={this.state.fishes} />
         <Inventory
+          storeId={this.props.match.params.storeId}
           fishes={this.state.fishes}
           removeFish={this.removeFish}
           addFish={this.addFish}

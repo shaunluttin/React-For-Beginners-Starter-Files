@@ -65,6 +65,9 @@ class Order extends React.Component {
     }
 
     render() {
+
+        if(!this.props.order) return;
+
         const orderIds = Object.keys(this.props.order);
         return (
             <div>
